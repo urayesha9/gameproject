@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert JSON Data to HTML Table</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+
+    </style>
+</head>
+<body>
+    <pre id="hideData">JSON Data:
+         [
+            {
+                "Customer ID": "1",
+                "Customer Name": "ABCD1",
+                "Business Name": "Something1",
+                "Email_id": "Something1@gmail.com",
+                "Mobile No": "9876543210",
+                "Business Location": "Bangaluru"
+            },
+            {
+                "Customer ID": "2",
+                "Customer Name": "ABCD2",
+                "Business Name": "Something2",
+                "Email_id": "Something2@gmail.com",
+                "Mobile No": "9876543200",
+                "Business Location": "Bangaluru"
+            },
+            {
+                "Customer ID": "3",
+                "Customer Name": "ABCD3",
+                "Business Name": "Something3",
+                "Email_id": "Something3@gmail.com",
+                "Mobile No": "9876543230",
+                "Business Location": "Bangaluru"
+            }
+             {
+                "Customer ID": "4",
+                "Customer Name": "ABCD4",
+                "Business Name": "Something4",
+                "Email_id": "Something4@gmail.com",
+                "Mobile No": "9876546230",
+                "Business Location": "Chennai"
+            },
+             {
+                "Customer ID": "5",
+                "Customer Name": "ABCD5",
+                "Business Name": "Something5",
+                "Email_id": "Something5@gmail.com",
+                "Mobile No": "9876543530",
+                "Business Location": "Hyderabad"
+            }
+        ]
+    </pre>
+    <input type="button" class="btn btn-secondary m-2" onclick="CreateTableFromJSON()" value="Create Table From JSON" />
+    <p class="table thead-dark m-2" id="showData"></p>
+    <tr><th class="thead-dark"></th></tr>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script>
+    function CreateTableFromJSON() {
+        var myCustomers =  [
+            {
+                "Customer ID": "1",
+                "Customer Name": "ABCD1",
+                "Business Name": "Something1",
+                "Email_id": "Something1@gmail.com",
+                "Mobile No": "9876543210",
+                "Business Location": "Bangaluru"
+            },
+            {
+                "Customer ID": "2",
+                "Customer Name": "ABCD2",
+                "Business Name": "Something2",
+                "Email_id": "Something2@gmail.com",
+                "Mobile No": "9876543200",
+                "Business Location": "Bangaluru"
+            },
+            {
+                "Customer ID": "3",
+                "Customer Name": "ABCD3",
+                "Business Name": "Something3",
+                "Email_id": "Something3@gmail.com",
+                "Mobile No": "9876543230",
+                "Business Location": "Bangaluru"
+            },
+             {
+                "Customer ID": "4",
+                "Customer Name": "ABCD4",
+                "Business Name": "Something4",
+                "Email_id": "Something4@gmail.com",
+                "Mobile No": "9876546230",
+                "Business Location": "Bangaluru"
+            },
+             {
+                "Customer ID": "5",
+                "Customer Name": "ABCD5",
+                "Business Name": "Something5",
+                "Email_id": "Something5@gmail.com",
+                "Mobile No": "9876543530",
+                "Business Location": "Bangaluru"
+            }
+        ]
+
+        // EXTRACT VALUE FOR HTML HEADER. 
+       
+        var col = [];
+        for (var i = 0; i < myCustomers.length; i++) {
+            for (var key in myCustomers[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < myCustomers.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myCustomers[i][col[j]];
+            }
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    }
+</script>
+</body>
+</html>
